@@ -110,31 +110,42 @@
     ];
     let messageIndex = 0;
     let currentMessageElement = null;
+    let messageDisplayed = false;
 
-    document.addEventListener("click", showMessage);
-    document.addEventListener("touchstart", showMessage);
+    let isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+
+    document.addEventListener(isMobile ? "touchstart" : "mousedown", showMessage);
+    document.addEventListener(isMobile ? "touchend" : "mouseup", removeMessage);
 
     function showMessage() {
-      if (currentMessageElement) {
-        currentMessageElement.remove();
+      if (!messageDisplayed) {
+        if (currentMessageElement) {
+          currentMessageElement.remove();
+        }
+
+        if (messageIndex < messages.length) {
+          const message = messages[messageIndex];
+          const messageElement = document.createElement("p");
+          messageElement.textContent = message.text;
+          messageElement.classList.add("message", message.className);
+
+          messageElement.style.left = `50%`;
+          messageElement.style.top = `50%`;
+          messageElement.style.transform = `translate(-50%, -50%)`;
+
+          document.body.appendChild(messageElement);
+          currentMessageElement = messageElement;
+          messageIndex++;
+
+          messageDisplayed = true;
+        } else {
+          messageIndex = 0; // Reset messageIndex to 0
+        }
       }
+    }
 
-      if (messageIndex < messages.length) {
-        const message = messages[messageIndex];
-        const messageElement = document.createElement("p");
-        messageElement.textContent = message.text;
-        messageElement.classList.add("message", message.className);
-
-        messageElement.style.left = `50%`;
-        messageElement.style.top = `50%`;
-        messageElement.style.transform = `translate(-50%, -50%)`;
-
-        document.body.appendChild(messageElement);
-        currentMessageElement = messageElement;
-        messageIndex++;
-      } else {
-        messageIndex = 0; // Reset messageIndex to 0
-      }
+    function removeMessage() {
+      messageDisplayed = false;
     }
 
     // Flower generation
