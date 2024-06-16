@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>BINI</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');
+
+    body {
+      font-family: 'Georgia', cursive;
+      background-color: #f0f8ff;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      height: 100vh;
+      text-align: center;
+      position: relative;
+    }
+
+    h1 {
+      color: #ff69b4;
+      font-size: 2.5em;
+      margin-top: 20px;
+    }
+
+    .message {
+      background-color: #fff0f5;
+      border: 2px solid #ff69b4;
+      border-radius: 10px;
+      padding: 15px 15px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      position: absolute;
+      white-space: pre-wrap;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      opacity: 0; /* Start hidden */
+      animation: fadeIn 0.5s ease-in-out forwards, slideIn 0.5s ease-in-out forwards;
+    }
+
+    .message-1 {
+      color: #ff4500;
+    }
+
+    .message-2 {
+      color: #32cd32;
+    }
+
+    .message-3 {
+      color: #1e90ff;
+    }
+
+    .message-4 {
+      color: #ff1493;
+    }
+
+    .message-5 {
+      color: #9400d3;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+
+    @keyframes slideIn {
+      from {
+        transform: translate(-50%, -60%);
+      }
+      to {
+        transform: translate(-50%, -50%);
+      }
+    }
+
+    /* Flower styles */
+    .flower {
+      position: absolute;
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background-color: #ff69b4;
+      animation: bloom 3s ease-in-out infinite;
+    }
+
+    @keyframes bloom {
+      0%, 100% {
+        transform: scale(0);
+        opacity: 0;
+      }
+      50% {
+        transform: scale(1);
+        opacity: 1;
+      }
+    }
+  </style>
+</head>
+<body>
+  <h1>Click or Touch the Screen!</h1>
+  <div id="messages"></div>
+  <script>
+    const messages = [
+      { text: "Can I drop 3 songs? Di talaga ako makapili sa tatlong to HUHUHU", className: "message-1" },
+      { text: "#NaNaNanditoLang -- the first time I heard this song, muntikan pa akong napaiyak, grabeng pigil ginawa ko kasi nasa bus ako that time and katabi ko pa kaklase ko HAHA. What I love about this song is it keeps me going. From the stanza:\n\n'Ano man ang pagdaanan, 'wag mong kalilimutan\nHindi ka iiwan, 'di papabayaan, maaasahan (maaasahan)\nManiwala lang sa 'yong sarili, iwasang maging negatibo palagi\nMga duda mo'y pakawalan, malalampasan rin naman (whoa)'\n\nAfter hearing this ang dami kong realization. I realized that all this time, eto lang pala ang gusto kong marinig. Na hindi dapat matakot sa future at walang dapat ikatakot. This song really helped me to overcome all of my existential crises, it assures me that whatever happens, nandiyan lang sila na masasandalan ko.", className: "message-2" },
+      { text: "#HereWithYou  --  this one is special to me since I want to dedicate this song to themselves. \n\n'Now here with you \nFound something new \nThrough the dark nights \nThe highlights \nYou're my lifeline \nAs we take our flight \nLet's paint the sky \nIn different lights \nHolding on to all that we could be \n  Gonna make it right' \n\nI want to thank them for coming into my life. They changed me to become a better version of myself. Halata namn po siguro, nag effort pa gumawa ng ganito ih ang tamad² ko HAHA. Tsaka nahirapan din ako pano mag simula ulit since napag iwanan ako, but because of them, it push me to do this. They motivate me to learn again. They really bring out the bright lights and positivity of someone's life. That's why with this new version of me, i want to share it to them and give them credits. Kong hindi dahil sakanila lugmok parin ako at naliligaw ng landas.", className: "message-3" },
+      { text: "#8  --  what I love about this song is, I can feel their genuine friendship. Why it's one of my fav song because i wish, I have this kind of friendship too. Kahit na hindi walo basta hanggang dulong pagkakaibigan. \n\n'Kahit lahat ng tao itinakda ang pagkatalo \nIpapakitang matatag pa rin tayo \nLaging pinanghahawakan lahat ng dinaanan \nAt ang pangakong walo hanggang dulo Ito ang pangakong (walo hanggang dulo)' \n\nI want to have someone that I can hold on to all of their promises and their unwavering commitment. Yung tipong kahit taon mn na di kayo nagkikita, kong makakasama mo sila muli, you're at peace. Yung tipong dimo kailangan magpanggap kasi sila naman yung kasama mo. Katulad ng BINI, sabay din namin aabutin ang aming pangarap.", className: "message-4" },
+      { text: "That's all! Thank You for reading.", className: "message-5" }
+    ];
+    let messageIndex = 0;
+    let currentMessageElement = null;
+
+    document.addEventListener("click", showMessage);
+    document.addEventListener("touchstart", showMessage);
+
+    function showMessage() {
+      if (currentMessageElement) {
+        currentMessageElement.remove();
+      }
+
+      if (messageIndex < messages.length) {
+        const message = messages[messageIndex];
+        const messageElement = document.createElement("p");
+        messageElement.textContent = message.text;
+        messageElement.classList.add("message", message.className);
+
+        messageElement.style.left = `50%`;
+        messageElement.style.top = `50%`;
+        messageElement.style.transform = `translate(-50%, -50%)`;
+
+        document.body.appendChild(messageElement);
+        currentMessageElement = messageElement;
+        messageIndex++;
+      } else {
+        messageIndex = 0; // Reset messageIndex to 0
+      }
+    }
+
+    // Flower generation
+    const numFlowers = 100; // Number of flowers
+    const flowerColors = ['#ff69b4', '#00ffff', '#ff4500', '#32cd32', '#1e90ff', '#9400d3', '#ffa500', '#ff00ff']; // Flower colors
+
+    for (let i = 0; i < numFlowers; i++) {
+      const flower = document.createElement('div');
+      flower.classList.add('flower');
+      flower.style.backgroundColor = flowerColors[Math.floor(Math.random() * flowerColors.length)];
+      flower.style.left = `${Math.random() * window.innerWidth}px`;
+      flower.style.top = `${Math.random() * window.innerHeight}px`;
+      document.body.appendChild(flower);
+    }
+  </script>
+</body>
+</html>
